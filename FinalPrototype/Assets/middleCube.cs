@@ -10,11 +10,11 @@ public class middleCube : MonoBehaviour {
 	private const float DISTANCE_MARGIN = 1.0f;
 
 	private Vector3 middlePoint;
-	private float distanceFromMiddlePoint;
-	private float distanceBetweenPlayers;
-	private float cameraDistance;
+	public float distanceFromMiddlePoint;
+	public float distanceBetweenPlayers;
+	public float cameraDistance;
 	private float aspectRatio;
-	private float fov;
+	public float fov;
 	private float tanFov;
 
 	void Start() {

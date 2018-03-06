@@ -1,20 +1,82 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rewired;
 
+// [RequireComponent(typeof(CharacterController))]
 public class player2 : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+	public int playerId = 10; // The Rewired player id of this character
+	public float bulletSpeed = 15.0f;
+	public GameObject bulletPrefab;
+
+	private Player player; // The Rewired Player
+	private CharacterController cc;
+	private Vector3 moveVector;
+	private bool fire;
+
+	public float rotateSpeed;
+	public float moveSpeed; 
+	public float strafeSpeed;
+
+	void Awake() {
+		// Get the Rewired Player object for this player and keep it for 
+		// the duration of the character's lifetime
 		
+
+		// Get the character controller
+		// cc = GetComponent<CharacterController>();
+	}
+
+	void Start () {
+		rotateSpeed = 150;
+		moveSpeed = 3;
+		strafeSpeed = 3;
+		player = ReInput.players.GetPlayer(playerId);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		var x = Input.GetAxis("Horizontal1") * Time.deltaTime * 150.0f;
-		var z = Input.GetAxis("Vertical1") * Time.deltaTime * 3.0f;
+		Debug.Log("player2: " + player.id);
+		GetInput();
+		// ProcessInput();
 
-		transform.Rotate(0,x,0);
-		transform.Translate(0,0,z);
+		var rotate = player.GetAxis("Rotate Player") * Time.deltaTime * rotateSpeed;
+		var move = player.GetAxis("Move Horizontal") * Time.deltaTime * moveSpeed;
+
+		transform.Rotate(0, rotate, 0);
+		transform.Translate(0, 0, move);
+
+		if(fire)
+		{
+			Debug.Log("fire!");
+		}
+	}
+
+	private void GetInput() 
+	{
+		// Get the input from the Rewired Player. 
+		// All controllers that the Player owns will contribute, so it doesn't matter
+		// whether the input is coming from a joystick, the keyboard, mouse, or a custom 
+		// controller.
+
+		// smoveVector.x = player.GetAxis("Move Horizontal"); // get input by name or action id
+		// moveVector.y = player.GetAxis("Rotate Player");
+		fire = player.GetButtonDown("Fire");
+	}
+
+	private void ProcessInput() 
+	{
+		// Process movement
+		if(moveVector.x != 0.0f || moveVector.y != 0.0f) {
+			cc.Move(moveVector * moveSpeed * Time.deltaTime);
+		}
+
+		// Process fire
+		if(fire) {
+//			GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
+//			bullet.rigidbody.AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
+			
+		}
 	}
 }

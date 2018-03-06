@@ -36,7 +36,6 @@ public class MultipleTargetCamera : MonoBehaviour {
 		Vector3 centerPoint = GetCenterPoint ();
 		Vector3 newPosition = centerPoint + offset;
 		transform.position = Vector3.SmoothDamp (transform.position, newPosition, ref velocity, smoothTime);
-
 	}
 
 	void Zoom()
@@ -46,7 +45,7 @@ public class MultipleTargetCamera : MonoBehaviour {
 		cam.fieldOfView = Mathf.Lerp (cam.fieldOfView, newZoom, Time.deltaTime * 5.0f);
 	}
 
-	float GetGreatestDistance()
+	float GetGreatestDistance()	
 	{
 		var bounds = new Bounds (targets [0].position, Vector3.zero);
 		for (int i = 0; i < targets.Count; i++) 
