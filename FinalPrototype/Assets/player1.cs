@@ -12,6 +12,7 @@ public class player1 : MonoBehaviour {
 
 	private Player player; // The Rewired Player
 	private CharacterController cc;
+    private Animator anim;
 	private Vector3 moveVector;
 	private bool fire;
 
@@ -26,6 +27,8 @@ public class player1 : MonoBehaviour {
 
 		// Get the character controller
 		// cc = GetComponent<CharacterController>();
+
+	    anim = GetComponent<Animator>();
 	}
 
 	void Start () {
@@ -46,6 +49,12 @@ public class player1 : MonoBehaviour {
 
 		transform.Rotate(0, rotate, 0);
 		transform.Translate(0, 0, move);
+
+	    float animMove = move * 20;
+	    float animStrafe = strafe * 20;
+
+	    anim.SetFloat("Forward", animMove);
+	    anim.SetFloat("Turn", animStrafe);
 
 		if(fire)
 		{

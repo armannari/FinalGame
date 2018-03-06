@@ -12,6 +12,7 @@ public class player2 : MonoBehaviour {
 
 	private Player player; // The Rewired Player
 	private CharacterController cc;
+    private Animator anim;
 	private Vector3 moveVector;
 	private bool fire;
 
@@ -20,13 +21,14 @@ public class player2 : MonoBehaviour {
 	public float strafeSpeed;
 
 	void Awake() {
-		// Get the Rewired Player object for this player and keep it for 
-		// the duration of the character's lifetime
-		
+        // Get the Rewired Player object for this player and keep it for 
+        // the duration of the character's lifetime
+        player = ReInput.players.GetPlayer(playerId);
 
-		// Get the character controller
-		// cc = GetComponent<CharacterController>();
-	}
+        // Get the character controller
+        // cc = GetComponent<CharacterController>();
+	    anim = GetComponent<Animator>();
+    }
 
 	void Start () {
 		rotateSpeed = 150;
@@ -43,11 +45,18 @@ public class player2 : MonoBehaviour {
 
 		var rotate = player.GetAxis("Rotate Player") * Time.deltaTime * rotateSpeed;
 		var move = player.GetAxis("Move Horizontal") * Time.deltaTime * moveSpeed;
+	    var strafe = player.GetAxis("Strafe") * Time.deltaTime * strafeSpeed;
 
-		transform.Rotate(0, rotate, 0);
+        transform.Rotate(0, rotate, 0);
 		transform.Translate(0, 0, move);
 
-		if(fire)
+	    float animMove = move * 20;
+	    float animStrafe = strafe * 20;
+
+	    anim.SetFloat("Forward", animMove);
+	    anim.SetFloat("Turn", animStrafe);
+
+        if (fire)
 		{
 			Debug.Log("fire!");
 		}
