@@ -23,6 +23,11 @@ public class player2 : MonoBehaviour {
 	private Rigidbody myRigidBody;
 	private Vector3 moveInput;
 	private Vector3 moveVelocity;
+	private Vector3 camForward;
+	Transform cam;
+
+	float forwardAmount;
+	float turnAmount;
 
 	void Awake() {
 		// Get the Rewired Player object for this player and keep it for 
@@ -37,6 +42,9 @@ public class player2 : MonoBehaviour {
 	}
 
 	void Start () {
+
+		cam = Camera.main.transform;
+
 		rotateSpeed = 150;
 		moveSpeed = 3;
 		strafeSpeed = 3;
@@ -54,20 +62,20 @@ public class player2 : MonoBehaviour {
 		// transform.Rotate(0, rotate, 0);
 		// transform.Translate(strafe, 0, move);
 
-		moveInput = new Vector3(player.GetAxis("MHorizontal"), 0f, player.GetAxis("MVertical"));
-		moveVelocity = moveInput * moveSpeed;
+		// moveInput = new Vector3(player.GetAxis("MHorizontal"), 0f, player.GetAxis("MVertical"));
+		// moveVelocity = moveInput * moveSpeed;
 
-		Vector3 playerDirection = Vector3.right * player.GetAxis("RHorizontal") + Vector3.forward * player.GetAxis("RVertical");
-		if(playerDirection.sqrMagnitude > 0.0f)
+		Vector3 playerDirection = Vector3.right * player.GetAxisRaw("RHorizontal") + Vector3.forward * player.GetAxisRaw("RVertical");
+		if(playerDirection.sqrMagnitude > 0.3f)
 		{
 			transform.rotation = Quaternion.LookRotation(playerDirection, Vector3.up);
 		}
 
-	    float animMove = moveInput.z * 20;
-	    float animStrafe = moveInput.x * 20;
+	    // float animMove = moveInput.x * 20;
+	    // float animStrafe = moveInput.z * 20;
 
-	    anim.SetFloat("Forward", animMove);
-	    anim.SetFloat("Turn", animStrafe);
+	    // anim.SetFloat("Forward", animMove);
+	    // anim.SetFloat("Turn", animStrafe);
 
 		if(fire)
 		{
@@ -78,6 +86,72 @@ public class player2 : MonoBehaviour {
 	private void FixedUpdate()
 	{
 		myRigidBody.velocity = moveVelocity;
+
+		float horizontal = player.GetAxisRaw("MHorizontal");
+		float vertical = player.GetAxisRaw("MVertical");
+
+		if(cam != null)
+		{
+			camForward = Vector3.Scale(cam.up, new Vector3(1,0,1)).normalized;
+			moveVelocity = vertical * camForward + horizontal * cam.right;
+		}
+		else
+		{
+			moveVelocity = vertical * Vector3.forward + horizontal * Vector3.right;
+		}
+
+		if(moveInput.magnitude > 1)
+		{
+			moveInput.Normalize();
+		}
+		
+		Move(moveVelocity);
+
+		Vector3 movement;
+		if(turnAmount > 0.3 || turnAmount < -0.3)
+		{
+			movement = new Vector3(horizontal / 2, 0, vertical);	
+		}
+		// else if(forwardAmount < -0.3)
+		// {
+		// 	movement = new Vector3(horizontal, 0, vertical / 2);
+		// }
+		else
+		{
+			movement = new Vector3(horizontal, 0, vertical);
+		}
+
+		
+
+		myRigidBody.AddForce(movement * moveSpeed / Time.deltaTime);
+		
+	}
+
+	private void Move(Vector3 moveVelocity)
+	{
+		if(moveVelocity.magnitude > 1)
+		{
+			moveVelocity.Normalize();
+		}
+
+		this.moveInput = moveVelocity;
+
+		ConvertMoveInput();
+		UpdateAnimator();
+	}
+
+	private void ConvertMoveInput()
+	{
+		Vector3 localMove = transform.InverseTransformDirection(moveInput);
+		turnAmount = localMove.x;
+
+		forwardAmount = localMove.z;
+	}
+
+	private void UpdateAnimator()
+	{
+		anim.SetFloat("Forward", forwardAmount, 0.1f, Time.deltaTime);
+		anim.SetFloat("Turn", turnAmount, 0.1f, Time.deltaTime);
 	}
 
 	private void GetInput() 
