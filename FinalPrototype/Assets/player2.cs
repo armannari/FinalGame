@@ -6,7 +6,7 @@ using Rewired;
 // [RequireComponent(typeof(CharacterController))]
 public class player2 : MonoBehaviour {
 
-	public int playerId = 10; // The Rewired player id of this character
+	public int playerId = 1; // The Rewired player id of this character
 	public float bulletSpeed = 15.0f;
 	public GameObject bulletPrefab;
 
@@ -20,46 +20,64 @@ public class player2 : MonoBehaviour {
 	public float moveSpeed; 
 	public float strafeSpeed;
 
-	void Awake() {
-        // Get the Rewired Player object for this player and keep it for 
-        // the duration of the character's lifetime
-        player = ReInput.players.GetPlayer(playerId);
+	private Rigidbody myRigidBody;
+	private Vector3 moveInput;
+	private Vector3 moveVelocity;
 
-        // Get the character controller
-        // cc = GetComponent<CharacterController>();
+	void Awake() {
+		// Get the Rewired Player object for this player and keep it for 
+		// the duration of the character's lifetime
+		player = ReInput.players.GetPlayer(playerId);
+
+		// Get the character controller
+		// cc = GetComponent<CharacterController>();
+
 	    anim = GetComponent<Animator>();
-    }
+		myRigidBody = GetComponent<Rigidbody>();
+	}
 
 	void Start () {
 		rotateSpeed = 150;
 		moveSpeed = 3;
 		strafeSpeed = 3;
-		player = ReInput.players.GetPlayer(playerId);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log("player2: " + player.id);
 		GetInput();
 		// ProcessInput();
 
-		var rotate = player.GetAxis("Rotate Player") * Time.deltaTime * rotateSpeed;
-		var move = player.GetAxis("Move Horizontal") * Time.deltaTime * moveSpeed;
-	    var strafe = player.GetAxis("Strafe") * Time.deltaTime * strafeSpeed;
+		// var rotate = player.GetAxis("Rotate Player") * Time.deltaTime * rotateSpeed;
+		// var move = player.GetAxis("Move Horizontal") * Time.deltaTime * moveSpeed;
+		// var strafe = player.GetAxis("Strafe") * Time.deltaTime * strafeSpeed;
 
-        transform.Rotate(0, rotate, 0);
-		transform.Translate(0, 0, move);
+		// transform.Rotate(0, rotate, 0);
+		// transform.Translate(strafe, 0, move);
 
-	    float animMove = move * 20;
-	    float animStrafe = strafe * 20;
+		moveInput = new Vector3(player.GetAxis("MHorizontal"), 0f, player.GetAxis("MVertical"));
+		moveVelocity = moveInput * moveSpeed;
+
+		Vector3 playerDirection = Vector3.right * player.GetAxis("RHorizontal") + Vector3.forward * player.GetAxis("RVertical");
+		if(playerDirection.sqrMagnitude > 0.0f)
+		{
+			transform.rotation = Quaternion.LookRotation(playerDirection, Vector3.up);
+		}
+
+	    float animMove = moveInput.z * 20;
+	    float animStrafe = moveInput.x * 20;
 
 	    anim.SetFloat("Forward", animMove);
 	    anim.SetFloat("Turn", animStrafe);
 
-        if (fire)
+		if(fire)
 		{
 			Debug.Log("fire!");
 		}
+	}
+
+	private void FixedUpdate()
+	{
+		myRigidBody.velocity = moveVelocity;
 	}
 
 	private void GetInput() 
