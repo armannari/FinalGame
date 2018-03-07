@@ -108,20 +108,40 @@ public class player1 : MonoBehaviour {
 		Move(moveVelocity);
 
 		Vector3 movement;
-		if(turnAmount > 0.3 || turnAmount < -0.3)
-		{
-			movement = new Vector3(horizontal / 2, 0, vertical);	
-		}
-		// else if(forwardAmount < -0.3)
+		// if(turnAmount > 0.3 || turnAmount < -0.3)
 		// {
-		// 	movement = new Vector3(horizontal, 0, vertical / 2);
+		// 	movement = new Vector3(horizontal / 2, 0, vertical);	
 		// }
-		else
-		{
-			movement = new Vector3(horizontal, 0, vertical);
-		}
+		// // else if(forwardAmount < -0.3)
+		// // {
+		// // 	movement = new Vector3(horizontal, 0, vertical / 2);
+		// // }
+		// else
+		// {
+		// 	movement = new Vector3(horizontal, 0, vertical);
+		// }
+
+		bool backwards = false;
 
 		
+
+		movement = new Vector3(horizontal, 0, vertical);
+		float angle = Vector3.Angle(transform.forward, movement);
+		
+		if(angle > 85)
+		{
+			backwards = true;
+		}
+
+		if(backwards)
+		{
+			movement = movement * 0.5f;
+		}
+
+		if(movement.magnitude > 1)
+		{
+			movement.Normalize();
+		}
 
 		myRigidBody.AddForce(movement * moveSpeed / Time.deltaTime);
 		
