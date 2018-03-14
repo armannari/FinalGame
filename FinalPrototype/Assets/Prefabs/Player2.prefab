@@ -652,8 +652,8 @@ GameObject:
   - component: {fileID: 4180274389247250}
   - component: {fileID: 95184470653872084}
   - component: {fileID: 54697823648098742}
-  - component: {fileID: 143894805007548816}
-  - component: {fileID: 114011245316196748}
+  - component: {fileID: 114035509423275086}
+  - component: {fileID: 136159705998561398}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -765,7 +765,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1972752339292282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.99, y: -3.4329112e-19, z: 1.5580933}
+  m_LocalPosition: {x: 7.99, y: 0, z: 1.5580933}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4447049192521574}
@@ -1276,7 +1276,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!95 &95184470653872084
 Animator:
@@ -1295,7 +1295,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114011245316196748
+--- !u!114 &114035509423275086
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1303,7 +1303,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1972752339292282}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d742daabff5f14703be1d8af42231115, type: 3}
+  m_Script: {fileID: 11500000, guid: be87c70cfba954592b8a39cee555898f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerId: 1
@@ -1312,6 +1312,19 @@ MonoBehaviour:
   rotateSpeed: 2
   moveSpeed: 4
   strafeSpeed: 0
+--- !u!136 &136159705998561398
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1972752339292282}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.59
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.78, z: 0}
 --- !u!137 &137477666322071860
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1330,7 +1343,7 @@ SkinnedMeshRenderer:
   - {fileID: 2100000, guid: c2c41542db80399479dd6e3fab6ce48e, type: 2}
   - {fileID: 2100000, guid: 5e5319b991184514185ea9d753476203, type: 2}
   - {fileID: 2100000, guid: a238be05ab985634a8b62d84039a200c, type: 2}
-  - {fileID: 2100000, guid: e9a0175a24fe5f74b98280d938fa5115, type: 2}
+  - {fileID: 2100000, guid: 455883ab641b74bc2869c03591e72ccf, type: 2}
   - {fileID: 2100000, guid: 455883ab641b74bc2869c03591e72ccf, type: 2}
   - {fileID: 2100000, guid: 62ca80444ea4d914093ea6d2fcb9e1f9, type: 2}
   - {fileID: 2100000, guid: 908f58e8cfded6547b0bdd08a6e4e492, type: 2}
@@ -1400,20 +1413,3 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.006857097, y: 0.05040562, z: 0.047428846}
     m_Extent: {x: 1.0616107, y: 0.9893645, z: 0.43312824}
   m_DirtyAABB: 0
---- !u!143 &143894805007548816
-CharacterController:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1972752339292282}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.95, z: 0}

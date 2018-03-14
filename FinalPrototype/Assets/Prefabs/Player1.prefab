@@ -247,8 +247,8 @@ GameObject:
   - component: {fileID: 4520851649540880}
   - component: {fileID: 95352010612415080}
   - component: {fileID: 54474480072105946}
-  - component: {fileID: 143173971853193672}
   - component: {fileID: 114662793381252108}
+  - component: {fileID: 136544257725450558}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -863,7 +863,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1292021534003908}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.294829, y: -3.4329112e-19, z: 1.5580933}
+  m_LocalPosition: {x: 4.294829, y: 0, z: 1.5580933}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4890733716105038}
@@ -1276,7 +1276,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 126
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!95 &95352010612415080
 Animator:
@@ -1312,6 +1312,19 @@ MonoBehaviour:
   rotateSpeed: 2
   moveSpeed: 4
   strafeSpeed: 0
+--- !u!136 &136544257725450558
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1292021534003908}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.59
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.78, z: 0}
 --- !u!137 &137943741376167958
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1400,20 +1413,3 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.006857097, y: 0.05040562, z: 0.047428846}
     m_Extent: {x: 1.0616107, y: 0.9893645, z: 0.43312824}
   m_DirtyAABB: 0
---- !u!143 &143173971853193672
-CharacterController:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1292021534003908}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.95, z: 0}

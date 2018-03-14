@@ -4,7 +4,7 @@ using UnityEngine;
 using Rewired;
 
 // [RequireComponent(typeof(CharacterController))]
-public class player1 : MonoBehaviour {
+public class playerController : MonoBehaviour {
 
 	public int playerId = 0; // The Rewired player id of this character
 	public float bulletSpeed = 15.0f;
@@ -108,18 +108,6 @@ public class player1 : MonoBehaviour {
 		Move(moveVelocity);
 
 		Vector3 movement;
-		// if(turnAmount > 0.3 || turnAmount < -0.3)
-		// {
-		// 	movement = new Vector3(horizontal / 2, 0, vertical);	
-		// }
-		// // else if(forwardAmount < -0.3)
-		// // {
-		// // 	movement = new Vector3(horizontal, 0, vertical / 2);
-		// // }
-		// else
-		// {
-		// 	movement = new Vector3(horizontal, 0, vertical);
-		// }
 
 		bool backwards = false;
 
